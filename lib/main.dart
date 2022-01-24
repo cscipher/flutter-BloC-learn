@@ -7,14 +7,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Employee App Bloc',
-      theme: ThemeData(primarySwatch: Colors.orange),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Employee App Bloc'),
-          ),
-          body: const Home()),
-    );
+        title: 'Employee App Bloc',
+        theme: ThemeData(primarySwatch: Colors.orange),
+        debugShowCheckedModeBanner: false,
+        home: const Home());
   }
 }

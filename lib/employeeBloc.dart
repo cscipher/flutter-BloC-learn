@@ -2,7 +2,6 @@ import 'dart:async';
 import 'employee.dart';
 
 class EmployeeBloc {
-  
   // dummy data
   final List<Employee> _employeeList = [
     Employee(1, 'cipher', 91000.0),
@@ -14,7 +13,7 @@ class EmployeeBloc {
   // stream controller is the 'gate' through which we can add, remove, and listen to the stream
   final _employeeListStreamController = StreamController<List<Employee>>();
 
-  //inc and dec 
+  //inc and dec
   final _employeeSalaryIncrementStreamController = StreamController<Employee>();
   final _employeeSalaryDecrementStreamController = StreamController<Employee>();
 
@@ -33,14 +32,7 @@ class EmployeeBloc {
   StreamSink<Employee> get employeeSalaryDecrementSink =>
       _employeeSalaryDecrementStreamController.sink;
 
-  EmployeeBloc() {
-    _employeeListStreamController.add(_employeeList);
-
-    _employeeSalaryIncrementStreamController.stream.listen(_incrementSalary);
-    _employeeSalaryDecrementStreamController.stream.listen(_decrementSalary);
-  }
-
-  // core functions
+  // core functions (logical funcs)
   void _incrementSalary(Employee event) {
     double salary = event.salary;
     double incrementedSalary = salary * 20 / 100;
@@ -55,6 +47,19 @@ class EmployeeBloc {
     _employeeList[_employeeList.indexOf(event)] =
         Employee(event.id, event.name, salary - decrementedSalary);
     employeeListSink.add(_employeeList);
+  }
+
+  // increment salary method getter
+  Function(Employee) get incrementSalary => _incrementSalary;
+  // decrement salary method getter
+  Function(Employee) get decrementSalary => _decrementSalary;
+
+  // constructor
+  EmployeeBloc() {
+    _employeeListStreamController.add(_employeeList);
+
+    _employeeSalaryIncrementStreamController.stream.listen(_incrementSalary);
+    _employeeSalaryDecrementStreamController.stream.listen(_decrementSalary);
   }
 
   //dispose
